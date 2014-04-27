@@ -51,6 +51,6 @@ object Lists {
       case x :: tail if (x <= maxValue) => max(maxValue, tail)
     }
 
-    return max(Int.MinValue, xs)
+    max(Int.MinValue, xs)
   }
 }
