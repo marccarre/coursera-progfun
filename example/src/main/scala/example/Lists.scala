@@ -11,14 +11,14 @@ object Lists {
    * For this example assignment you can use the following methods in class
    * `List`:
    *
-   *  - `xs.isEmpty: Boolean` returns `true` if the list `xs` is empty
-   *  - `xs.head: Int` returns the head element of the list `xs`. If the list
-   *    is empty an exception is thrown
-   *  - `xs.tail: List[Int]` returns the tail of the list `xs`, i.e. the the
-   *    list `xs` without its `head` element
+   * - `xs.isEmpty: Boolean` returns `true` if the list `xs` is empty
+   * - `xs.head: Int` returns the head element of the list `xs`. If the list
+   * is empty an exception is thrown
+   * - `xs.tail: List[Int]` returns the tail of the list `xs`, i.e. the the
+   * list `xs` without its `head` element
    *
-   *  ''Hint:'' instead of writing a `for` or `while` loop, think of a recursive
-   *  solution.
+   * ''Hint:'' instead of writing a `for` or `while` loop, think of a recursive
+   * solution.
    *
    * @param xs A list of natural numbers
    * @return The sum of all elements in `xs`
@@ -47,8 +47,7 @@ object Lists {
 
     def max(maxValue: Int, xs: List[Int]): Int = xs match {
       case Nil => maxValue
-      case x :: tail if (x > maxValue) => max(x, tail)
-      case x :: tail if (x <= maxValue) => max(maxValue, tail)
+      case x :: tail => if (x > maxValue) max(x, tail) else max(maxValue, tail)
     }
 
     max(Int.MinValue, xs)
