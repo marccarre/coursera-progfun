@@ -2,8 +2,6 @@ package recfun
 
 import common._
 import scala.annotation.tailrec
-import sun.font.TrueTypeFont
-import com.sun.org.apache.xpath.internal.functions.FuncFalse
 
 object Main {
   def main(args: Array[String]) {
