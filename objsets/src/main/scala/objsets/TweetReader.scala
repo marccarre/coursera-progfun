@@ -1,5 +1,7 @@
 package objsets
 
+import scala.annotation.tailrec
+
 object TweetReader {
 
   object ParseTweets {
@@ -70,6 +72,7 @@ object TweetReader {
   private val siteTweetSetMap: Map[String, TweetSet] =
     Map() ++ (sites zip tweetSets)
 
+  @tailrec
   private def unionOfAllTweetSets(curSets: List[TweetSet], acc: TweetSet): TweetSet =
     if (curSets.isEmpty) acc
     else unionOfAllTweetSets(curSets.tail, acc.union(curSets.head))
