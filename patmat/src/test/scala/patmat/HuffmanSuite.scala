@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 import patmat.Huffman._
+import java.util.concurrent.TimeUnit
 
 @RunWith(classOf[JUnitRunner])
 class HuffmanSuite extends FunSuite {
@@ -39,9 +40,43 @@ class HuffmanSuite extends FunSuite {
     assert(combine(leaflist) === List(Fork(Leaf('e',1),Leaf('t',2),List('e', 't'),3), Leaf('x',4)))
   }
 
+  test("decode secret") {
+    println(decodedSecret)
+  }
+
   test("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
     }
+  }
+
+  test("decode and quick-encode a very short text should be identity") {
+    new TestTrees {
+      assert(decode(t1, quickEncode(t1)("ab".toList)) === "ab".toList)
+    }
+  }
+
+  val longerText = "thisisaverylongsentencewithmultipletimesthesameletterinit".toList
+
+  test("decode and encode a longer text should be identity") {
+    assert(decode(frenchCode, encode(frenchCode)(longerText)) === longerText)
+  }
+
+  test("decode and quick-encode a longer text should be identity") {
+    assert(decode(frenchCode, quickEncode(frenchCode)(longerText)) === longerText)
+  }
+
+  def measureTime(f: => Unit): Long = {
+    val start = System.nanoTime()
+    f
+    val elapsed = System.nanoTime() - start
+    println(s"${TimeUnit.NANOSECONDS.toMicros(elapsed)} microseconds elapsed.")
+    elapsed
+  }
+
+  test("decode and encode a longer text should be quicker with quickEncode") {
+    val elapsedStandardEncode = measureTime(encode(frenchCode)(longerText))
+    val elapsedQuickEncode = measureTime(encode(frenchCode)(longerText))
+    assert(elapsedQuickEncode < elapsedStandardEncode)
   }
 }
